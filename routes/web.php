@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('users', 'UsersController');
+Route::resource('questions', 'QuestionsController');
+Route::resource('forms', 'FormsController');
+Route::resource('pre-questions', 'PreQuestionsController');
+Route::resource('pre-choices', 'PreChoicesController');
