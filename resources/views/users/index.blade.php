@@ -8,6 +8,11 @@
                 <div class="panel-heading">Users</div>
 
                 <div class="panel-body">
+                    <div class="pull-right">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary">
+                            Create
+                        </a>
+                    </div>
                     <table class="table-striped table table-bordered">
                         <thead>
                             <tr>

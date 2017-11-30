@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('form-faculties-create', require('./components/FormFacultiesCreate.vue'));
 
 const app = new Vue({
     el: '#app'

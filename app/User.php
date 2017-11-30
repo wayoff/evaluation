@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return config('user-type')[$value];
     }
+
+    public function scopeFaculty($query)
+    {
+        return $query->where('user_type', 2);
+    }
 }

@@ -18,8 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('codes/downloads', 'CodesController@download');
 Route::resource('users', 'UsersController');
 Route::resource('questions', 'QuestionsController');
+Route::resource('forms/{id}/faculties', 'FormFacultiesController');
 Route::resource('forms', 'FormsController');
-Route::resource('pre-questions', 'PreQuestionsController');
-Route::resource('pre-choices', 'PreChoicesController');

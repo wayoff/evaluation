@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationUserTable extends Migration
+class CreateEvaluationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateEvaluationUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('evaluation_user', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('evaluation_id')->unsigned();
+        Schema::create('evaluations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('form_id');
+            $table->integer('code_count');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateEvaluationUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluation_user');
+        Schema::dropIfExists('evaluations');
     }
 }
