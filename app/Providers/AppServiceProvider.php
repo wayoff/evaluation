@@ -31,7 +31,9 @@ class AppServiceProvider extends ServiceProvider
             $forms = collect();
 
             if (!auth()->guest() && auth()->user()->user_type == 'student') {
-                $professors = auth()->user()->student->professors;
+                $user = auth()->user();
+                $answers = auth()->user()->answers;
+                $professors = $user->student->professors;
 
                 foreach($professors as $prof) {
                     $evaluations = $prof->evaluations()->whereHas('form', function($query) use($today) {
@@ -39,10 +41,14 @@ class AppServiceProvider extends ServiceProvider
                     })->get();
 
                     foreach($evaluations as $evaluation) {
+                        $exists = $answers->where('evaluation_id', $evaluation->id)->first();
+
                         $array = $evaluation->form->toArray();
                         $array['name'] = $prof->name;
                         $array['professor_id'] = $prof->id;
                         $array['evaluation_id'] = $evaluation->id;
+                        $array['exists'] = !empty($exists) ? true : false;
+
                         $forms->push($array);
                     }
                 }

@@ -31,9 +31,15 @@
                                     <td>{{ $form['end_date'] }}</td>
                                     <th>
                                         @if(!auth()->guest() && auth()->user()->user_type == 'student')
-                                            <a href="#" class="btn btn-default btn-block">
-                                                Evaluate
-                                            </a>
+                                            @if(!$form['exists']) 
+                                                <a href="/answers/{{ $form['evaluation_id'] }}" class="btn btn-default btn-block">
+                                                    Evaluate
+                                                </a>
+                                            @else
+                                                <button class="btn btn-default btn-block" disabled>
+                                                    Evaluate
+                                                </button>
+                                            @endif
                                         @endif
                                     </th>
                                 </tr>
