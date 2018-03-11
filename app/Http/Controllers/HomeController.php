@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Answer;
+use App\Form;
+use App\Evaluation;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +30,11 @@ class HomeController extends Controller
         if (auth()->user()->user_type == 'student') {
             return redirect('/');
         }
+        $today = Carbon::now();
 
-        return view('home');
+        $answers = Answer::with(['user', 'evaluation.form', 'evaluation.user'])->orderBy('created_at', 'desc')->limit(15)->get();
+        $forms = Form::where('start_date', '<=', $today)->where('end_date', '>', $today)->get();
+
+        return view('home', compact('answers', 'forms'));
     }
 }

@@ -40,4 +40,21 @@ class FormFacultiesController extends Controller
 
         return view('forms.faculties.create', compact('form', 'users'));
     }
+
+    public function show($id, $facultyId)
+    {
+        $form = $this->forms->findOrFail($id);
+
+        $evaluation = $form->evaluations()->where('user_id', $facultyId)->with('answers.studentAnswers.question')->first();
+
+        $answers = $evaluation->answers;
+
+        $studentAnswers = collect();
+
+        foreach ($answers as $answer) {
+            $studentAnswers = $studentAnswers->merge($answer->studentAnswers);
+        }
+
+        return view('forms.faculties.show', compact('evaluation', 'form', 'studentAnswers'));
+    }
 }

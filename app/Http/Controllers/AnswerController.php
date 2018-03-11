@@ -56,4 +56,17 @@ class AnswerController extends Controller
 
         return redirect('/');
     }
+
+    /**
+     * show student answers
+     * @param  [type]  $answer_id [description]
+     * @param  Request $request   [description]
+     * @return [type]             [description]
+     */
+    public function show($answer_id, Request $request)
+    {
+        $answer = Answer::with('studentAnswers.question', 'user', 'evaluation.user')->findOrFail($answer_id);
+
+        return view('answers.show', compact('answer'));
+    }
 }

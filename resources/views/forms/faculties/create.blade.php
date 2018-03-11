@@ -1,9 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.app-sidemenu')
 
 @section('content')
-<div class="container">
-    <form-faculties-create
-        :form="{{json_encode($form)}}"
-    ></form-faculties-create>
-</div>
+  <form-faculties-create
+      :form="{{json_encode($form)}}"
+  ></form-faculties-create>
 @endsection

@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             $today = Carbon::now();
             $forms = collect();
 
-            if (!auth()->guest() && auth()->user()->user_type == 'student') {
+            if (!auth()->guest() && (auth()->user()->user_type == 'student')) {
                 $user = auth()->user();
                 $answers = auth()->user()->answers;
                 $professors = $user->student->professors;
