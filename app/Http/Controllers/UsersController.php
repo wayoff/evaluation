@@ -35,7 +35,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $faculties = $this->users->faculty()->get();
+
+        return view('users.create', compact('faculties'));
     }
 
     /**
@@ -46,7 +48,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->users->create($request->all());
+        $user = $this->users->create($request->all());
 
         return redirect()->back();
     }
@@ -73,8 +75,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = $this->users->findOrFail($id);
+        $faculties = $this->users->faculty()->get();
 
-        return view('users.edit', compact('user'));
+        return view('users.edit', compact('user', 'faculties'));
     }
 
     /**
@@ -90,6 +93,11 @@ class UsersController extends Controller
 
         $user->update($request->all());
 
+        if($user->isStudent()) {
+            $user->student()->update($request->all());
+            $user->student->professors()->sync($request->input('professor_id'));
+        }
+
         return redirect('users');
     }
 
@@ -104,5 +112,7 @@ class UsersController extends Controller
         $user = $this->users->findOrFail($id);
 
         $user->delete();
+        
+        return redirect('users');
     }
 }

@@ -26,15 +26,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label for="username" class="col-md-4 control-label">Username</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" readonly="true" required>
+                                <input id="username" type="username" class="form-control" name="username" value="{{ $user->username }}" readonly="true" required>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -79,6 +79,15 @@
                                     Faculty
                                   </label>
                                 </div>
+                                
+                                @if($user->isStudent())
+                                    <div class="radio">
+                                      <label>
+                                        <input type="radio" class="form--user-type" name="user_type" value="3" {{ $user->user_type == 'student' ? 'checked' : '' }}>
+                                        Student
+                                      </label>
+                                    </div>
+                                @endif
 
                                 @if ($errors->has('user_type'))
                                     <span class="help-block">
@@ -87,6 +96,41 @@
                                 @endif
                             </div>
                         </div>
+
+                        @if($user->isStudent())
+                            <div class="form-group student_info">
+                                <label for="student_professor" class="col-md-4 control-label"> Student Info</label>
+
+                                <div class="col-md-8 col-md-offset-4">
+                                    <div class="form-group">
+                                        <label for="">Student No:</label>
+                                        <input type="text" class="form-control" name="student_no" id="student_no" placeholder="Student No" value="{{$user->username}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Division:</label>
+                                        <select name="academic_attended" class="form-control">
+                                            <option value="Senior High" {{ $user->academic_attended == 'Senior High' ? 'selected' : '' }} > Senior High</option>
+                                            <option value="College" {{ $user->academic_attended == 'College' ? 'selected' : '' }}> College</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group student_info">
+                                <label for="student_professor" class="col-md-4 control-label"> Student Professor</label>
+
+                                <div class="col-md-8 col-md-offset-4">
+                                    @foreach($faculties as $faculty)
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="{{ $faculty->id }}" checked="checked" name="professor_id[]">
+                                                (ID: {{ $faculty->id }}) Name: {{ $faculty->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4 text-center">
@@ -101,4 +145,32 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $( function() {
+            var username = $('#username');
+            var studentAdditionalInfoContainer = function(userType) {
+                if (userType != 3) {
+                    $('.student_info').hide();
+                    username.attr('readonly', false);
+                } else {
+                    $('.student_info').show();
+                    username.attr('readonly', true);
+                }
+            };
+
+            $('.form--user-type').on('click', function() {
+                var userType = $(this).val();
+                studentAdditionalInfoContainer(userType);
+            });
+
+            $('#student_no').on('keyup', function(e) {
+                username.val(e.target.value);
+            });
+
+            studentAdditionalInfoContainer({{ $user->user_type == 'student' ? 3 : 0 }});
+        })
+    </script>
 @endsection

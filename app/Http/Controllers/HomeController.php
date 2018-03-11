@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->user_type == 'student') {
+            return redirect('/');
+        }
+
         return view('home');
     }
 }

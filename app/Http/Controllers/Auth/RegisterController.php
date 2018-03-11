@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -69,6 +70,11 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
+        if($user->isStudent()) {
+            $user->student()->create($request->all());
+            $user->student->professors()->sync($request->input('professor_id'));
+        }
+
         // $this->guard()->login($user);
 
         return $this->registered($request, $user)
@@ -85,7 +91,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
             'user_type' => $data['user_type'],
         ]);

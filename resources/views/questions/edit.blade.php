@@ -43,23 +43,23 @@
                             $choices = collect([
                                 [
                                     'label' => '1st Choice',
-                                    'value' => $question->choices[0]->decription
+                                    'value' => 'Always'
                                 ],
                                 [
                                     'label' => '2nd Choice',
-                                    'value' => $question->choices[1]->decription
+                                    'value' => 'Often'
                                 ],
                                 [
                                     'label' => '3rd Choice',
-                                    'value' => $question->choices[2]->decription
+                                    'value' => 'Sometimes'
                                 ],
                                 [
                                     'label' => '4th Choice',
-                                    'value' => $question->choices[3]->decription
+                                    'value' => 'Seldom'
                                 ],
                                 [
                                     'label' => '5th Choice',
-                                    'value' => $question->choices[4]->decription
+                                    'value' => 'Never'
                                 ]
                             ]);
                         @endphp

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsTable extends Migration
+class CreateStudentAnswerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateEvaluationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('evaluations', function (Blueprint $table) {
+        Schema::create('student_answer', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('form_id');
+            $table->string('answer_id');
+            $table->integer('question_id');
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateEvaluationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('student_answer');
     }
 }

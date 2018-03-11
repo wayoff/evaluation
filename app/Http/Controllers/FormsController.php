@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use Alert;
+use App\User;
 use App\Form;
 use App\Question;
+use App\Evaluation;
 use Illuminate\Http\Request;
 
 class FormsController extends Controller
 {
+    protected $users;
     protected $forms;
     protected $questions;
+    protected $evaluations;
 
-    public function __construct(Form $forms, Question $questions)
+    public function __construct(Form $forms, Question $questions, Evaluation $evaluations, User $users)
     {
+        $this->users = $users;
         $this->forms = $forms;
         $this->questions = $questions;
+        $this->evaluations = $evaluations;
     }
 
     /**
@@ -50,11 +56,22 @@ class FormsController extends Controller
      */
     public function store(Request $request)
     {
+        $users = $this->users->faculty()->get();
+
         $form = $this->forms->create([
-            'title' => $request->input('title')
+            'title' => $request->input('title'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),    
         ]);
 
         $form->questions()->sync($request->input('questions'));
+
+        foreach ($users as $user) {
+            $this->evaluations->create([
+                'user_id' => $user->id,
+                'form_id' => $form->id
+            ]);
+        }
 
         Alert::success('Success on creating new form');
 
@@ -69,7 +86,7 @@ class FormsController extends Controller
      */
     public function show($id)
     {
-        $form = $this->forms->with('questions')->findOrFail($id);
+        $form = $this->forms->with('questions', 'evaluations.user')->findOrFail($id);
 
         return view('forms.show', compact('form'));
     }
@@ -101,10 +118,13 @@ class FormsController extends Controller
         $form = $this->forms->findOrFail($id);
 
         $form->update([
-            'title' => $request->input('title')
+            'title' => $request->input('title'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
 
         $form->questions()->sync($request->input('questions'));
+
 
         Alert::success('Success on updating form: ' . $form->title);
 
@@ -120,5 +140,9 @@ class FormsController extends Controller
     public function destroy($id)
     {
         $this->forms->findOrFail($id)->delete();
+
+        Alert::success('Success on removing form');
+
+        return redirect(route('forms.index'));
     }
 }

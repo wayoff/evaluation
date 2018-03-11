@@ -3,7 +3,13 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Variables
-@import "variables";
+// @import "variables";
+$navbar-default-bg: #870000;
+$navbar-default-color: #fff;
+$navbar-default-link-color: #fff;
+$navbar-default-link-active-color: #BDBDBD;
+$navbar-default-link-hover-color: #BDBDBD;
+
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";

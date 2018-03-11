@@ -21,14 +21,18 @@
                             <div class="panel-heading">
                                 Faculty
 
-                                <span class="pull-right">
+                                {{-- <span class="pull-right">
                                     <a href="{{ route('faculties.create', $form->id) }}" class="btn btn-info btn-xs">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
-                                </span>
+                                </span> --}}
                             </div>
                             <div class="panel-body">
-                                No users associated with this form
+                                <div class="list-group">
+                                    @foreach($form->evaluations as $evaluation )
+                                        <a href="#" class="list-group-item">{{ $evaluation->user->name }}</a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

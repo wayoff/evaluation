@@ -43,23 +43,23 @@
                             $choices = collect([
                                 [
                                     'label' => '1st Choice',
-                                    'value' => 'Strongly Disagree'
+                                    'value' => 'Always'
                                 ],
                                 [
                                     'label' => '2nd Choice',
-                                    'value' => 'Disagree'
+                                    'value' => 'Often'
                                 ],
                                 [
                                     'label' => '3rd Choice',
-                                    'value' => 'Neutral'
+                                    'value' => 'Sometimes'
                                 ],
                                 [
                                     'label' => '4th Choice',
-                                    'value' => 'Agree'
+                                    'value' => 'Seldom'
                                 ],
                                 [
                                     'label' => '5th Choice',
-                                    'value' => 'Strongly Agree'
+                                    'value' => 'Never'
                                 ]
                             ]);
                         @endphp

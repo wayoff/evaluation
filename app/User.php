@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'user_type'
+        'name', 'password', 'user_type', 'username'
     ];
 
     /**
@@ -29,7 +29,12 @@ class User extends Authenticatable
 
     public function evaluations()
     {
-        return $this->belongsToMany(Evaluation::class);
+        return $this->hasMany(Evaluation::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
     }
 
     public function getUserTypeAttribute($value)
@@ -40,5 +45,15 @@ class User extends Authenticatable
     public function scopeFaculty($query)
     {
         return $query->where('user_type', 2);
+    }
+
+    public function isStudent()
+    {
+        return $this->user_type == 'student';
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
     }
 }

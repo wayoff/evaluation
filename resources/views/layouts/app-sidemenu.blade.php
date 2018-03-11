@@ -18,10 +18,15 @@
 <body>
     <div id="app">
         @include('layouts._navbar')
-        @if(!auth()->guest() && auth()->user()->user_type == 'student')
-            @include('layouts._student-info')
-        @endif
-        @yield('content')
+
+        <div class="container-fluid">
+            <div class="col-md-3 well">
+                //
+            </div>
+            <div class="col-md-9">
+                @yield('content')
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->

@@ -18,7 +18,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Username</th>
                                 <th>Type</th>
                                 <th>Action</th>
                             </tr>
@@ -28,7 +28,7 @@
                                 <tr>
                                     <td> {{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }} </td>
                                     <td> {{ $user->name }} </td>
-                                    <td> {{ $user->email }} </td>
+                                    <td> {{ $user->username }} </td>
                                     <td> {{ $user->user_type }} </td>
                                     <td>
                                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="form-inline form-delete" role="form">

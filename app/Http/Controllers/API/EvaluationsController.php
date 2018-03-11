@@ -52,16 +52,15 @@ class EvaluationsController extends Controller
     {
         $evaluation = $this->evaluations->create([
             'user_id' => $request->input('user_id'),
-            'form_id' => $request->input('form_id'),
-            'code_count' => $request->input('code_count'),
+            'form_id' => $request->input('form_id')
         ]);
 
-        for ($i=0; $i < $request->input('code_count'); $i++) { 
-            $this->codes->create([
-                'evaluation_id' => $evaluation->id,
-                'token' => $this->quickRandom(10),
-            ]);
-        }
+        // for ($i=0; $i < $request->input('code_count'); $i++) { 
+        //     $this->codes->create([
+        //         'evaluation_id' => $evaluation->id,
+        //         'token' => $this->quickRandom(10),
+        //     ]);
+        // }
 
         return response()->json($evaluation);
     }

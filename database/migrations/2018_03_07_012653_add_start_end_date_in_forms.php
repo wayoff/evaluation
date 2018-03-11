@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsTable extends Migration
+class AddStartEndDateInForms extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateEvaluationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('evaluations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('form_id');
-            $table->timestamps();
+        Schema::table('forms', function (Blueprint $table) {
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
         });
     }
 
@@ -28,6 +26,8 @@ class CreateEvaluationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluations');
+        Schema::table('forms', function (Blueprint $table) {
+            $table->dropColumn(['start_date', 'end_date']);
+        });
     }
 }

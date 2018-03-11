@@ -25,6 +25,34 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-3 control-label">Start Date</label>
+
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" name="start_date" value="{{ old('start_date') }}" required autofocus>
+
+                                @if ($errors->has('start_date'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-3 control-label">End Date</label>
+
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" name="end_date" value="{{ old('end_date') }}" required autofocus>
+
+                                @if ($errors->has('end_date'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
                             @php
                                 $chunks = $questions->chunk(2);
@@ -36,7 +64,7 @@
                                         <div class="col-md-6">
                                             <div class="checkbox">
                                               <label>
-                                                <input type="checkbox" name="questions[]" value="{{ $question->id }}">{{ $question->title }}
+                                                <input type="checkbox" name="questions[]" value="{{ $question->id }}" checked>{{ $question->title }}
                                               </label>
                                             </div>
                                         </div>

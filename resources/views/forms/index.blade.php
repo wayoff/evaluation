@@ -21,6 +21,7 @@
                                 <th>ID</th>
                                 <th>Title</th>
                                 <th>Total Questions</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -30,6 +31,9 @@
                                     <td> {{ str_pad($form->id, 5, '0', STR_PAD_LEFT) }} </td>
                                     <td> <a href="{{ route('forms.show', $form->id) }}">{{ $form->title }} </a></td>
                                     <td> {{ $form->questions->count() }} </td>
+                                    <td>
+                                        {{ $form->start_date->format('Y-m-d') }} - {{ $form->end_date->format('Y-m-d') }}
+                                    </td>
                                     <td>
                                         <form action="{{ route('forms.destroy', $form->id) }}" method="POST" class="form-inline form-delete" role="form">
                                             {!! csrf_field() !!}
