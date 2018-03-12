@@ -28,11 +28,11 @@
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
                 @else
-                    @if(auth()->user()->user_type == 'admin')
+                    {{-- @if(auth()->user()->user_type == 'admin')
                         <li><a href="{{ route('users.index') }}">Users</a></li>
                         <li><a href="{{ route('questions.index') }}">Questions</a></li>
                         <li><a href="{{ route('forms.index') }}">Forms</a></li>                        
-                    @endif
+                    @endif --}}
                     {{-- <li><a href="{{ route('users.index') }}">Questions</a></li> --}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
