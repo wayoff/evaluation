@@ -91,7 +91,10 @@ class UsersController extends Controller
     {
         $user = $this->users->findOrFail($id);
 
-        $user->update($request->all());
+        $user->update([
+            'username' => $request->input('username'),
+            'password' => bcrypt($request->input('password'))
+        ]);
 
         if($user->isStudent()) {
             $user->student()->update($request->all());
