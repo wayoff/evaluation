@@ -81,6 +81,7 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ asset('js/index.js') }}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     @include('sweet::alert')
 
     @yield('scripts')

@@ -180,6 +180,8 @@ return [
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
     ],
 
     /*
@@ -232,6 +234,8 @@ return [
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
     ],
 
 ];
