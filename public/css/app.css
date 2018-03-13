@@ -5688,8 +5688,8 @@ tbody.collapse.in {
 }
 
 .navbar-default {
-  background-color: #870000;
-  border-color: #660000;
+  background-color: #800000;
+  border-color: #5f0000;
 }
 
 .navbar-default .navbar-brand {
@@ -5720,7 +5720,7 @@ tbody.collapse.in {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #BDBDBD;
-  background-color: #660000;
+  background-color: #5f0000;
 }
 
 .navbar-default .navbar-nav > .disabled > a,
@@ -5745,13 +5745,13 @@ tbody.collapse.in {
 
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #660000;
+  border-color: #5f0000;
 }
 
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #660000;
+  background-color: #5f0000;
   color: #BDBDBD;
 }
 
@@ -5770,7 +5770,7 @@ tbody.collapse.in {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #BDBDBD;
-    background-color: #660000;
+    background-color: #5f0000;
   }
 
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
@@ -8348,5 +8348,43 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+#app {
+  background-color: #ffe6e6;
+  height: 100%;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-weight: bolder;
+  border-top: 1px solid #800000;
+}
+
+.logo-link {
+  color: white;
+  font-weight: bold;
+}
+
+.logo-link img {
+  width: 80px;
+  display: inline-block;
+}
+
+.logo-container h4,
+.logo-container h3 {
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 

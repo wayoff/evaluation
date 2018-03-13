@@ -1,8 +1,13 @@
 <form class="form-horizontal" method="POST" action="{{ route('login') }}">
     {{ csrf_field() }}
+    <div class="form-group">
+        <label class="col-md-12">
+            Fields with <span class="text-danger">*</span> are required
+        </label>
+    </div>
 
     <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-        <label for="username" class="col-md-4 control-label">Username</label>
+        <label for="username" class="col-md-4 control-label">Username <span class="text-danger">*</span> </label>
 
         <div class="col-md-6">
             <input id="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
@@ -16,7 +21,7 @@
     </div>
 
     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-        <label for="password" class="col-md-4 control-label">Password</label>
+        <label for="password" class="col-md-4 control-label">Password <span class="text-danger">*</span> </label>
 
         <div class="col-md-6">
             <input id="password" type="password" class="form-control" name="password" required>

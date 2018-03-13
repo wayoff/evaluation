@@ -4,7 +4,12 @@
     <div class="container">
         <div class="row">
             <div class="{{ !auth()->guest() ? 'col-md-12' : 'col-md-8' }}">
-                <div class="panel panel-primary">
+                <h3 style="margin-top: 0px">Online Faculty Evaluation System</h3>
+                <div>
+                    is developed to serve as a useful tool for easy accessibility and less hassle of works of the administration and students of the institution in conducting faculty evaluations. <br />
+                    A Comprehensive Student Faculty Evaluation involves the systematic observation (measurement) of relevant faculty performance to determine the degree to which that performance is consonant with the values and needs of the educational institution. 
+                </div>
+                <div class="panel panel-primary" style="margin-top: 10px;">
                     <div class="panel-heading">On-going evaluation</div>
 
                     <div class="panel-body">

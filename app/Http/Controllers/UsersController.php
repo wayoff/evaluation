@@ -21,9 +21,19 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->users->paginate(20);
+        $users = $this->users;
+        $q = $request->input('q');
+
+        if ($request->input('q')) {
+            $users = $users
+                        ->where('name', 'like', '%' . $q . '%')
+                        ->orWhere('id', 'like', '%' . $q . '%')
+                        ->orWhere('username', 'like', '%' . $q . '%');
+        }
+
+        $users = $users->paginate(20);
 
         return view('users.index', compact('users'));
     }

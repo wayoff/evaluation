@@ -11,9 +11,21 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
+            {{-- <a class="navbar-brand" href="{{ url('/') }}" style="max-width: 30%;">
                 {{ config('app.name', 'Laravel') }}
-            </a>
+                <img src="/img/ama.png">
+            </a> --}}
+            <div class="logo-container">
+                <div class="col-md-3 text-center">
+                    <a href="/" class="logo-link" >
+                        <img src="/img/ama.png">
+                    </a>
+                </div>
+                <div class="col-md-9" style="margin-top:20px;">
+                    <h3>AMA Computer College</h3>
+                    <h4>Online Faculty Evaluation</h4>
+                </div>
+            </div>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -23,10 +35,13 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-top:25px">
                 <!-- Authentication Links -->
+                <li>
+                    <a href="#"> {{ date('M d, Y g:i A')}}</a>
+                </li>
                 @guest
-                    <li><a href="{{ route('login') }}">Login</a></li>
+                    {{-- <li><a href="{{ route('login') }}">Login</a></li> --}}
                 @else
                     {{-- @if(auth()->user()->user_type == 'admin')
                         <li><a href="{{ route('users.index') }}">Users</a></li>

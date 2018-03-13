@@ -1,5 +1,5 @@
 <div class="container">
-  <table class="table table-bordered">
+  <table class="table table-bordered" style="background: white;">
     <tr>
       <td>Name</td>
       <td><strong> {{ auth()->user()->name }}  </strong> </td>

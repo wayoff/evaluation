@@ -21,7 +21,13 @@
         @if(!auth()->guest() && auth()->user()->user_type == 'student')
             @include('layouts._student-info')
         @endif
-        @yield('content')
+        <div style="min-height: 600px; height: 100%; display: block">
+            @yield('content')
+        </div>
+
+        <div class="col-md-12">
+            @include('layouts._footer')
+        </div>
     </div>
 
     <!-- Scripts -->

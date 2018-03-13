@@ -71,10 +71,12 @@
             <div class="col-md-3">
                 @include('layouts._sidemenu')
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" style="min-height: 600px">
                 @yield('content')
             </div>
         </div>
+
+        @include('layouts._footer')
     </div>
 
     <!-- Scripts -->

@@ -4,12 +4,47 @@
 
 // Variables
 // @import "variables";
-$navbar-default-bg: #870000;
+$navbar-default-bg: #800000;
 $navbar-default-color: #fff;
 $navbar-default-link-color: #fff;
 $navbar-default-link-active-color: #BDBDBD;
 $navbar-default-link-hover-color: #BDBDBD;
 
-
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+
+#app {
+  background-color: #ffe6e6;
+  height: 100%;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-weight: bolder;
+  border-top: 1px solid #800000;
+}
+
+.logo-link {
+  color: white;
+  font-weight: bold;
+}
+
+.logo-link img {
+  width: 80px;
+  display: inline-block;
+}
+
+.logo-container h4, .logo-container h3 {
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}

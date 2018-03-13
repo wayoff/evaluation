@@ -41,8 +41,10 @@
                     <h3 class="panel-title">Statistics</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-offset-2 col-md-8">
-                        <canvas id="myChart" width="200" height="200"></canvas>
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <canvas id="myChart" width="200" height="200"></canvas>
+                        </div>
                     </div>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -68,8 +70,41 @@
                             @endforeach 
                         </tbody>
                     </table>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Always</th>
+                                <th>Often</th>
+                                <th>Sometimes</th>
+                                <th>Seldom</th>
+                                <th>Never</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($studentAnswers->groupBy('question_id') as $key => $value)
+                                <tr>
+                                    <td> {{ $value[0]['question']['title'] }} </td>
+                                    <td class="text-center">
+                                        {{ $value->where('value', 'Always')->count() / $evaluation->answers->count() * 100 }} %
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $value->where('value', 'Often')->count() / $evaluation->answers->count() * 100 }} %
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $value->where('value', 'Sometimes')->count() / $evaluation->answers->count() * 100 }} %
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $value->where('value', 'Seldom')->count() / $evaluation->answers->count() * 100 }} %
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $value->where('value', 'Never')->count() / $evaluation->answers->count() * 100 }} %
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                {{-- pie graph --}}
             </div>
         </div>
     </div>

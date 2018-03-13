@@ -7,6 +7,7 @@ use App\User;
 use App\Form;
 use App\Question;
 use App\Evaluation;
+use App\Http\Requests\FormUpdateRequest;
 use Illuminate\Http\Request;
 
 class FormsController extends Controller
@@ -54,7 +55,7 @@ class FormsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormUpdateRequest $request)
     {
         $users = $this->users->faculty()->get();
 
@@ -113,7 +114,7 @@ class FormsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FormUpdateRequest $request, $id)
     {
         $form = $this->forms->findOrFail($id);
 

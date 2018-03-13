@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'API'], function() {
+	Route::post('/login', 'UsersController@login');
 	Route::get('users', 'UsersController@index');
 	Route::get('evaluations', 'EvaluationsController@index');
 	Route::get('evaluations/{id}','EvaluationsController@show');

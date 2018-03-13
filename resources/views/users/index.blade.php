@@ -10,6 +10,15 @@
                     Create
                 </a>
             </div>
+            <form action="/users" method="get" class="form-inline text-center" style="margin-bottom: 10px;" role="form">
+            
+                <div class="form-group">
+                    <label class="sr-only" for="">Search</label>
+                    <input type="text" class="form-control" name="q" placeholder="Search">
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
             <table class="table-striped table table-bordered">
                 <thead>
                     <tr>
@@ -21,6 +30,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if($users->isEmpty())
+                        <tr>
+                            <td colspan="10" class="text-center">
+                                No user was found
+                            </td>
+                        </tr>
+                    @endif
                     @foreach($users as $user)
                         <tr>
                             <td> {{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }} </td>
