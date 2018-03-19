@@ -19,6 +19,8 @@ class CreateStudentAnswerTable extends Migration
             $table->integer('question_id');
             $table->string('value');
             $table->timestamps();
+            $table->foreign('answer_id')->references('id')->on('answer_id')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

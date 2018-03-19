@@ -5,8 +5,9 @@
         <div class="panel-heading">Questions</div>
 
         <div class="panel-body">
-            <form class="form-horizontal" method="POST" action="{{ route('questions.store') }}">
+            <form class="form-horizontal" method="POST" action="{{ route('questions.update', $question->id) }}">
                 {{ csrf_field() }}
+                {{ method_field('PUT') }}
 
                 <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                     <label for="name" class="col-md-3 control-label">Title</label>
@@ -22,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                {{-- <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                     <label for="text" class="col-md-3 control-label">Description</label>
 
                     <div class="col-md-6">
@@ -34,7 +35,7 @@
                             </span>
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
                 @php
                     $choices = collect([

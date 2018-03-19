@@ -26,13 +26,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('codes/downloads', 'CodesController@download');
-Route::resource('users', 'UsersController');
 Route::get('/answers/{answer_id}/student', 'AnswerController@show');
 Route::get('/answers/{evaluation_id}', 'AnswerController@create');
 Route::post('/answers/{evaluation_id}', 'AnswerController@store');
-Route::resource('questions', 'QuestionsController');
-Route::resource('forms/{id}/faculties', 'FormFacultiesController');
-Route::resource('forms', 'FormsController');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => 'admin'], function() {
+	Route::resource('users', 'UsersController');
+	Route::resource('questions', 'QuestionsController');
+	Route::resource('forms/{id}/faculties', 'FormFacultiesController');
+	Route::resource('forms', 'FormsController');
+});

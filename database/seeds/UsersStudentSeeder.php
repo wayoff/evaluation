@@ -20,7 +20,9 @@ class UsersStudentSeeder extends Seeder
             $id = $faker->numberBetween(100000, 399999);
 
             $user = [
-                'name' => $faker->name,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'middle_name' => $faker->lastName,
                 'username' => $id,
                 'password' => bcrypt('password'),
                 'user_type' => 3
@@ -30,7 +32,9 @@ class UsersStudentSeeder extends Seeder
             
             $model->student()->create([
                 'student_no' => $id,
-                'academic_attended' => 'College'
+                'academic_attended' => 'College',
+                'yr_level' => '2nd',
+                'course' => 'Bachelor of Science in Information Technology',
             ]);
 
             $model->student->professors()->sync($professors);

@@ -10,6 +10,9 @@ class Student extends Model
     	'student_no',
     	'user_id',
     	'academic_attended',
+        'yr_level',
+        'strands',
+        'course',
     ];
 
     public function user() {

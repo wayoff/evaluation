@@ -15,8 +15,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password', 'user_type', 'username'
+        'name', 'password', 'user_type', 'username', 'first_name', 'last_name', 'middle_name', 'department',
     ];
+
+    /**
+     * append attribute
+     */
+    protected $appends = ['name'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -42,6 +47,15 @@ class User extends Authenticatable
         return config('user-type')[$value];
     }
 
+    public function getNameAttribute()
+    {
+        $lastName = empty($this->middle_name) 
+            ? $this->last_name
+            : $this->middle_name . ' ' . $this->last_name;
+
+        return $this->first_name . ' ' . $lastName;
+    }
+
     public function scopeFaculty($query)
     {
         return $query->where('user_type', 2);
@@ -50,6 +64,11 @@ class User extends Authenticatable
     public function isStudent()
     {
         return $this->user_type == 'student';
+    }
+
+    public function isFaculty()
+    {
+        return $this->user_type == 'faculty';
     }
 
     public function students()

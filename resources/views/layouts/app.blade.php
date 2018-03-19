@@ -37,5 +37,10 @@
     @include('sweet::alert')
 
     @yield('scripts')
+    <script>
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+      });
+    </script>
 </body>
 </html>

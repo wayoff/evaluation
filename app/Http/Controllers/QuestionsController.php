@@ -47,7 +47,7 @@ class QuestionsController extends Controller
     {
         $question = $this->questions->create([
             'title' => $request->input('title'),
-            'description' => $request->input('description')
+            'description' => $request->input('title')
         ]);
 
         foreach ($request->input('choices') as $key => $answer) {
@@ -99,7 +99,7 @@ class QuestionsController extends Controller
 
         $question->update([
             'title' => $request->input('title'),
-            'description' => $request->input('description')
+            'description' => $request->input('title')
         ]);
 
         $question->choices()->delete();

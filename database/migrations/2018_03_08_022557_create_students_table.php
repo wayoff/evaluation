@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('student_no');
             $table->string('academic_attended');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

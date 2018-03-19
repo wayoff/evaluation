@@ -48,7 +48,7 @@
                                                     type="radio"
                                                     name="question_{{$question->id}}"
                                                     value="{{$choice->decription}}"
-                                                    {{ $choice->order == 3 ? 'checked' : '' }}
+                                                    required
                                                 > {{ $choice->decription }}
                                             </label>
                                         @endforeach

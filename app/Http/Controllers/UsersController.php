@@ -33,7 +33,7 @@ class UsersController extends Controller
                         ->orWhere('username', 'like', '%' . $q . '%');
         }
 
-        $users = $users->paginate(20);
+        $users = $users->orderBy('id', 'desc')->paginate(20);
 
         return view('users.index', compact('users'));
     }
@@ -102,12 +102,22 @@ class UsersController extends Controller
         $user = $this->users->findOrFail($id);
 
         $user->update([
+            'last_name' => $request->input('last_name'),
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'department' => $request->input('department'),
             'username' => $request->input('username'),
             'password' => bcrypt($request->input('password'))
         ]);
 
         if($user->isStudent()) {
-            $user->student()->update($request->all());
+            $user->student()->update([
+                'student_no' => $request->input('student_no'),
+                'academic_attended' => $request->input('academic_attended'),
+                'yr_level'=> $request->input('yr_level'),
+                'strands'=> $request->input('strands'),
+                'course'=> $request->input('course'),
+            ]);
             $user->student->professors()->sync($request->input('professor_id'));
         }
 

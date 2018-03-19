@@ -16,8 +16,8 @@
                     </tr>
                     <tr>
                         <th>ID</th>
-                        <th>Title</th>
-                        <th>Description</th>
+                        <th>Question</th>
+                        {{-- <th>Description</th> --}}
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -26,7 +26,7 @@
                         <tr>
                             <td> {{ str_pad($question->id, 5, '0', STR_PAD_LEFT) }} </td>
                             <td> {{ $question->title }} </td>
-                            <td> {{ $question->description }} </td>
+                            {{-- <td> {{ $question->description }} </td> --}}
                             <td>
                                 <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="form-inline form-delete" role="form">
                                     {!! csrf_field() !!}

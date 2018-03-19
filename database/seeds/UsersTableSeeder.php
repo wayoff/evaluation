@@ -14,7 +14,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
     	$users = [
-    		'name' => 'Iam Admin',
+            'first_name' => 'Iam',
+            'last_name' => 'ADMIN',
     		'username' => 'username',
     		'password' => bcrypt('password'),
     		'remember_token' => str_random(10)

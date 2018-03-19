@@ -17,7 +17,9 @@ class UsersFacultySeeder extends Seeder
 
         for ($i=0; $i < 15; $i++) { 
             $user = [
-                'name' => $faker->name,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'middle_name' => $faker->lastName,
                 'username' => $faker->email,
                 'password' => bcrypt('password'),
                 'user_type' => 2

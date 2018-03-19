@@ -8388,3 +8388,8 @@ body {
   margin-bottom: 5px;
 }
 
+.table > thead > tr > th {
+  color: #800000;
+  background: #fff;
+}
+

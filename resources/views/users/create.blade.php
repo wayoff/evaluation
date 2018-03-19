@@ -8,15 +8,43 @@
             <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                 {{ csrf_field() }}
 
-                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                    <label for="name" class="col-md-4 control-label">Name</label>
+                <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                    <label for="name" class="col-md-4 control-label">Last Name</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                        <input id="name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required autofocus>
 
-                        @if ($errors->has('name'))
+                        @if ($errors->has('last_name'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('name') }}</strong>
+                                <strong>{{ $errors->first('last_name') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                    <label for="name" class="col-md-4 control-label">First Name</label>
+
+                    <div class="col-md-6">
+                        <input id="name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required autofocus>
+
+                        @if ($errors->has('first_name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('first_name') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group{{ $errors->has('middle_name') ? ' has-error' : '' }}">
+                    <label for="name" class="col-md-4 control-label">Middle Name</label>
+
+                    <div class="col-md-6">
+                        <input id="name" type="text" class="form-control" name="middle_name" value="{{ old('middle_name') }}" autofocus>
+
+                        @if ($errors->has('middle_name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('middle_name') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -91,19 +119,66 @@
                     </div>
                 </div>
 
+
+                <div class="form-group faculty_info">
+                    <label class="col-md-4 control-label">Department</label>
+
+                    <div class="col-md-6">
+                        <input type="" class="form-control" name="department">
+                    </div>
+                </div>
+
                 <div class="form-group student_info">
                     <label for="student_professor" class="col-md-4 control-label"> Student Info</label>
 
-                    <div class="col-md-8 col-md-offset-4">
+                    <div class="col-md-7 col-md-offset-4">
                         <div class="form-group">
                             <label for="">Student No:</label>
                             <input type="text" class="form-control" name="student_no" id="student_no" placeholder="Student No">
                         </div>
                         <div class="form-group">
                             <label for="">Division:</label>
-                            <select name="academic_attended" class="form-control">
+                            <select name="academic_attended" class="form-control division" id="division">
                                 <option value="Senior High"> Senior High</option>
                                 <option value="College"> College</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Year Level:</label>
+                            <input type="text" class="form-control" name="yr_level" id="yr_level" placeholder="Year Level">
+                        </div>
+                        <div class="form-group strands">
+                            <label for="">Strands:</label>
+                            @php
+                                $strands = [
+                                    'Accounting, Business and Management',
+                                    'Home Economics',
+                                    'Information and Communication Technology',
+                                    'Science, Technology, Engineering and Math',
+                                    'Humanities and Social Studies',
+                                ];
+                            @endphp
+                            <select name="strands" class="form-control" id="strands">
+                                @foreach($strands as $strand)
+                                    <option value="{{ $strand }}"> {{ $strand }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group course">
+                            <label for="">Course:</label>
+                            @php
+                                $courses = [
+                                    'Bachelor of Science in Information Technology',
+                                    'Bachelor of Science in Computer Engineering',
+                                    'Bachelor of Science in Hospitality Management',
+                                    'Bachelor of Science in Tourism Management',
+                                ];
+                            @endphp
+
+                            <select name="course" class="form-control" id="course">
+                                @foreach($courses as $course)
+                                    <option value="{{ $course }}"> {{ $course }} </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -139,8 +214,15 @@
 @section('scripts')
     <script type="text/javascript">
         $( function() {
+            $('.strands, .course').hide();
             var username = $('#username');
             var studentAdditionalInfoContainer = function(userType) {
+                if (userType == 2) {
+                    $('.faculty_info').show();
+                } else {
+                    $('.faculty_info').hide();
+                }
+
                 if (userType != 3) {
                     $('.student_info').hide();
                     username.attr('readonly', false);
@@ -149,7 +231,21 @@
                     username.attr('readonly', true);
                     username.val('');
                 }
+
+                student2ndAdditionalInfoContainer($('#division').val());
             };
+
+            var student2ndAdditionalInfoContainer = function(value) {
+                if (value == 'Senior High') {
+                    $('.course').hide();
+                    $('#course').val('');
+                    $('.strands').show();
+                } else {
+                    $('.strands').hide();
+                    $('#strands').val('');
+                    $('.course').show();
+                }
+            }
 
             $('.form--user-type').on('click', function() {
                 var userType = $(this).val();
@@ -158,6 +254,11 @@
 
             $('#student_no').on('keyup', function(e) {
                 username.val(e.target.value);
+            });
+
+            $('.division').on('change', function() {
+                var value = $(this).val();
+                student2ndAdditionalInfoContainer(value);
             });
 
             studentAdditionalInfoContainer(0);
