@@ -44,14 +44,22 @@ class UsersController extends Controller
 
         if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
             $user = auth()->user();
-            $evaluations = User::with(['evaluations'])->find($user->id);
+            $evaluations = User::with(['evaluations.answers.studentAnswers.question', 'evaluations.form.questions'])->find($user->id);
+
+            if ($user->isFaculty()) {
+                return response([
+                    'status' => 'success',
+                    'items' => [
+                        'user' => $user,
+                        'evaluations' => $evaluations->evaluations
+                    ]
+                ]);
+            }
 
             return response([
-                'status' => 'success',
-                'items' => [
-                    'user' => $user,
-                    'evaluations' => $evaluations
-                ]
+                'status' => 'error',
+                'message' => 'You are not authorize to use this app',
+                'items' => []
             ]);
         }
 
