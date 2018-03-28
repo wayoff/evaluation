@@ -52,16 +52,16 @@
 
                 <div class="col-md-12">
                     @php
-                        $chunks = $questions->chunk(2);
+                        $chunks = $categories->chunk(2);
                     @endphp
                     
                     @foreach($chunks as $chunk)
                         <div class="col-md-12">
-                            @foreach($chunk as $question)
+                            @foreach($chunk as $category)
                                 <div class="col-md-6">
                                     <div class="checkbox">
                                       <label>
-                                        <input type="checkbox" name="questions[]" value="{{ $question->id }}" checked>{{ $question->title }}
+                                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" checked>{{ $category->title }}
                                       </label>
                                     </div>
                                 </div>

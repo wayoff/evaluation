@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Alert;
 use App\User;
+use App\Category;
 use App\Form;
 use App\Question;
 use App\Evaluation;
@@ -16,13 +17,15 @@ class FormsController extends Controller
     protected $forms;
     protected $questions;
     protected $evaluations;
+    protected $categories;
 
-    public function __construct(Form $forms, Question $questions, Evaluation $evaluations, User $users)
+    public function __construct(Form $forms, Question $questions, Evaluation $evaluations, User $users, Category $categories)
     {
         $this->users = $users;
         $this->forms = $forms;
         $this->questions = $questions;
         $this->evaluations = $evaluations;
+        $this->categories = $categories;
     }
 
     /**
@@ -45,8 +48,9 @@ class FormsController extends Controller
     public function create()
     {
         $questions = $this->questions->all();
+        $categories = $this->categories->get();
 
-        return view('forms.create', compact('questions'));
+        return view('forms.create', compact('questions', 'categories'));
     }
 
     /**
@@ -65,7 +69,11 @@ class FormsController extends Controller
             'end_date' => $request->input('end_date'),    
         ]);
 
-        $form->questions()->sync($request->input('questions'));
+        $form->categories()->sync($request->input('categories'));
+
+        $categories = $this->categories->whereIn('id', $request->input('categories'))->with('questions')->get();
+
+        $form->questions()->sync($categories->pluck('questions')->flatten()->pluck('id')->all());
 
         foreach ($users as $user) {
             $this->evaluations->create([
@@ -87,7 +95,7 @@ class FormsController extends Controller
      */
     public function show($id)
     {
-        $form = $this->forms->with('questions', 'evaluations.user')->findOrFail($id);
+        $form = $this->forms->with('categories.questions', 'evaluations.user')->findOrFail($id);
 
         return view('forms.show', compact('form'));
     }
@@ -102,9 +110,9 @@ class FormsController extends Controller
     {
         $form = $this->forms->findOrFail($id);
 
-        $questions = $this->questions->all();
+        $categories = $this->categories->get();
 
-        return view('forms.edit', compact('questions', 'form'));
+        return view('forms.edit', compact('categories', 'form'));
     }
 
     /**
@@ -124,8 +132,11 @@ class FormsController extends Controller
             'end_date' => $request->input('end_date'),
         ]);
 
-        $form->questions()->sync($request->input('questions'));
+        $form->categories()->sync($request->input('categories'));
 
+        $categories = $this->categories->whereIn('id', $request->input('categories'))->with('questions')->get();
+
+        $form->questions()->sync($categories->pluck('questions')->flatten()->pluck('id')->all());
 
         Alert::success('Success on updating form: ' . $form->title);
 

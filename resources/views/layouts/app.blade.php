@@ -41,6 +41,10 @@
       document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
       });
+
+      $('form').on('submit', function() {
+        $('button[type="submit"]').attr('disabled', 'disabled');
+      })
     </script>
 </body>
 </html>

@@ -22,7 +22,7 @@ class AnswerController extends Controller
      */
     public function create($evaluation_id)
     {
-        $evaluation = Evaluation::findOrFail($evaluation_id);
+        $evaluation = Evaluation::with('form.questions', 'form.categories')->findOrFail($evaluation_id);
 
         return view('answers.create', compact('evaluation'));
     }
@@ -45,11 +45,18 @@ class AnswerController extends Controller
         $answer = Answer::create($data);
 
         foreach ($evaluation->form->questions as $question) {
-            StudentAnswer::create([
-                'answer_id' => $answer->id,
-                'question_id' => $question->id,
-                'value' => $request->input('question_' . $question->id)
-            ]);
+
+        }
+
+        foreach ($evaluation->form->categories as $category) {
+            foreach ($category->questions as $question) {
+                StudentAnswer::create([
+                    'answer_id' => $answer->id,
+                    'question_id' => $question->id,
+                    'category_id' => $category->id,
+                    'value' => $request->input('question_' . $question->id)
+                ]);
+            }
         }
         
         Alert::success('Success on evaluating professor');

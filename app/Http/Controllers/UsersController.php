@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -61,6 +62,59 @@ class UsersController extends Controller
         $user = $this->users->create($request->all());
 
         return redirect()->back();
+    }
+
+    public function import(Request $request)
+    {
+        Excel::load($request->file('list'), function($reader) {
+            $users = [];
+
+            // Getting all results
+            $results = $reader->get();
+
+            foreach($results as $result) {
+                $user = [
+                    'username' => $result->student_number,
+                    'password' => bcrypt($result->last_name . '321'),
+                    'user_type' => 3,
+                    'first_name' => $result->first_name,
+                    'last_name' => $result->last_name,
+                    'middle_name' => $result->middle_name,
+                    'student' => [
+                        'student_no' => $result->student_number,
+                        'academic_attended' => $result->division,
+                        'yr_level' => $result->year_level,
+                        'strands' => $result->strands,
+                        'course' => $result->course
+                    ],
+                    'faculties' => [],
+                ];
+
+                $faculties = [
+                    'teacher_1',
+                    'teacher_2',
+                    'teacher_3'
+                ];
+
+                foreach ($faculties as $faculty) {
+                    if (!empty($result[$faculty])) {
+                        $last_name = explode(', ', $result[$faculty])[0];
+                        $first_name = explode(', ', $result[$faculty])[1];
+
+                        $facultyModel = $this->users->where('last_name', $last_name)->where('first_name', $first_name)->first();
+
+                        if (!empty($facultyModel)) {
+                            $user['faculties'][] = $facultyModel->id;
+                        }
+                    }
+                }
+
+                $users[] = $user;
+            }
+
+            dd($users);
+
+        });
     }
 
     /**

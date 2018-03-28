@@ -35,25 +35,35 @@
                     </table>
                     <form action="/answers/{{$evaluation->id}}" method="post">
                         {{ csrf_field() }}
+
                         <table width="100%" class="table-bordered table">
-                            @foreach($evaluation->form->questions as $key => $question)
+                            @foreach($evaluation->form->categories as $category)
                                 <tr>
-                                    <td width="50%">
-                                        {{$key + 1 }}) {{ $question->title }}   
-                                    </td>
-                                    <td width="50%" class="text-center">
-                                        @foreach($question->choices as $choice)
-                                            <label class="radio-inline">
-                                                <input
-                                                    type="radio"
-                                                    name="question_{{$question->id}}"
-                                                    value="{{$choice->decription}}"
-                                                    required
-                                                > {{ $choice->decription }}
-                                            </label>
-                                        @endforeach
+                                    <td colspan="10" class="text-bold">
+                                        <strong>{{ $category->title }}</strong>
                                     </td>
                                 </tr>
+
+
+                                @foreach($category->questions as $key => $question)
+                                    <tr>
+                                        <td width="50%">
+                                            {{$key + 1 }}) {{ $question->title }}   
+                                        </td>
+                                        <td width="50%" class="text-center">
+                                            @foreach($question->choices as $choice)
+                                                <label class="radio-inline">
+                                                    <input
+                                                        type="radio"
+                                                        name="question_{{$question->id}}"
+                                                        value="{{$choice->decription}}"
+                                                        required
+                                                    > {{ $choice->decription }}
+                                                </label>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                             <tr>
                                 <td colspan="10">

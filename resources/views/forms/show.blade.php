@@ -33,13 +33,22 @@
                         Questions
                     </div>
                     <div class="panel-body">
-                        <div class="list-group">
-                            @foreach($form->questions as $key => $question)
-                                <a href="{{ route('questions.edit', $question->id) }}" class="list-group-item">
-                                    {{ $key + 1 }}. {{ $question->title }}
-                                </a>
-                            @endforeach
-                        </div>
+                        @foreach($form->categories as $category)
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> {{ $category->title }} </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="list-group">
+                                        @foreach($category->questions as $key => $question)
+                                            <a href="{{ route('questions.edit', $question->id) }}" class="list-group-item">
+                                                {{ $key + 1 }}. {{ $question->title }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

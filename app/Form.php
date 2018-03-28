@@ -26,4 +26,8 @@ class Form extends Model
     public function evaluations() {
         return $this->hasMany(Evaluation::class);
     }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
+    } 
 }

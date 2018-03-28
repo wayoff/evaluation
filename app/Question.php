@@ -20,4 +20,9 @@ class Question extends Model
     {
     	return $this->belongsToMany(Form::class);
     }
+
+    public function category()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

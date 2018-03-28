@@ -2,23 +2,38 @@
 
 @section('content')
     <div class="panel panel-primary">
-        <div class="panel-heading">Users</div>
+        <div class="panel-heading">
+            Users
+        </div>
 
         <div class="panel-body">
-            <div class="pull-right">
+            <div class="col-md-6">
+                <form action="/users/import" method="POST" class="form-inline" role="form" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label class="sr-only" for="">label</label>
+                        <input type="file" class="form-control" name="list" placeholder="Choose a file">
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form action="/users" method="get" class="form-inline" style="margin-bottom: 10px;" role="form">
+                
+                    <div class="form-group">
+                        <label class="sr-only" for="">Search</label>
+                        <input type="text" class="form-control" name="q" placeholder="Search">
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+            <div class="col-md-2 text-right">
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
                     Create
                 </a>
             </div>
-            <form action="/users" method="get" class="form-inline text-center" style="margin-bottom: 10px;" role="form">
-            
-                <div class="form-group">
-                    <label class="sr-only" for="">Search</label>
-                    <input type="text" class="form-control" name="q" placeholder="Search">
-                </div>
-            
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
             <table class="table-striped table table-bordered">
                 <thead>
                     <tr>

@@ -32,8 +32,10 @@ Route::post('/answers/{evaluation_id}', 'AnswerController@store');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'admin'], function() {
+	Route::post('/users/import', 'UsersController@import');
 	Route::resource('users', 'UsersController');
 	Route::resource('questions', 'QuestionsController');
+	Route::resource('categories', 'CategoriesController');
 	Route::resource('forms/{id}/faculties', 'FormFacultiesController');
 	Route::resource('forms', 'FormsController');
 });

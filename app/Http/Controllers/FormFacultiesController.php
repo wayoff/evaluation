@@ -45,7 +45,7 @@ class FormFacultiesController extends Controller
     {
         $form = $this->forms->findOrFail($id);
 
-        $evaluation = $form->evaluations()->where('user_id', $facultyId)->with('answers.studentAnswers.question')->first();
+        $evaluation = $form->evaluations()->where('user_id', $facultyId)->with('answers.studentAnswers.question', 'answers.studentAnswers.category')->first();
 
         $answers = $evaluation->answers;
 
