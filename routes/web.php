@@ -36,6 +36,7 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::resource('users', 'UsersController');
 	Route::resource('questions', 'QuestionsController');
 	Route::resource('categories', 'CategoriesController');
+	Route::get('forms/{id}/faculties/{facultyId}/pdf', 'FormFacultiesController@pdf');
 	Route::resource('forms/{id}/faculties', 'FormFacultiesController');
 	Route::resource('forms', 'FormsController');
 });

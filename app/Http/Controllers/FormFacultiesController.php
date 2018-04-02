@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Alert;
+use PDF;
 use App\Form;
 use App\User;
 use App\Evaluation;
@@ -55,6 +56,28 @@ class FormFacultiesController extends Controller
             $studentAnswers = $studentAnswers->merge($answer->studentAnswers);
         }
 
-        return view('forms.faculties.show', compact('evaluation', 'form', 'studentAnswers'));
+        return view('forms.faculties.show', compact('evaluation', 'form', 'studentAnswers', 'facultyId'));
+    }
+
+    public function pdf($id, $facultyId)
+    {
+
+        $form = $this->forms->findOrFail($id);
+
+        $evaluation = $form->evaluations()->where('user_id', $facultyId)->with('answers.studentAnswers.question', 'answers.studentAnswers.category')->first();
+
+        $answers = $evaluation->answers;
+
+        $studentAnswers = collect();
+
+        foreach ($answers as $answer) {
+            $studentAnswers = $studentAnswers->merge($answer->studentAnswers);
+        }
+        
+        $pdf = PDF::loadView('pdf.forms-faculties', compact('evaluation', 'form', 'studentAnswers'));
+
+        return $pdf->download('faculty-'.$facultyId.'.pdf');
+
+        // return view('pdf.forms-faculties', compact('evaluation', 'form', 'studentAnswers'));
     }
 }

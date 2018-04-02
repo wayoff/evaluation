@@ -120,19 +120,19 @@
                                 <tr>
                                     <td> {{$group[0]['category']['title']}} </td>
                                     <td class="text-center">
-                                        {{ $group->where('value', 'Always')->count() / $group->count() * 100 }} %
+                                        {{ number_format($group->where('value', 'Always')->count() / $group->count() * 100, 2) }} %
                                     </td>
                                     <td class="text-center">
-                                        {{ $group->where('value', 'Often')->count() / $group->count() * 100 }} %
+                                        {{ number_format($group->where('value', 'Often')->count() / $group->count() * 100, 2) }} %
                                     </td>
                                     <td class="text-center">
-                                        {{ $group->where('value', 'Sometimes')->count() / $group->count() * 100 }} %
+                                        {{ number_format($group->where('value', 'Sometimes')->count() / $group->count() * 100, 2) }} %
                                     </td>
                                     <td class="text-center">
-                                        {{ $group->where('value', 'Seldom')->count() / $group->count() * 100 }} %
+                                        {{ number_format($group->where('value', 'Seldom')->count() / $group->count() * 100, 2) }} %
                                     </td>
                                     <td class="text-center">
-                                        {{ $group->where('value', 'Never')->count() / $group->count() * 100 }} %
+                                        {{ number_format($group->where('value', 'Never')->count() / $group->count() * 100, 2) }} %
                                     </td>
                                 </tr>
                             </tbody>
@@ -140,6 +140,12 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <div class="text-center">
+            <a href="/forms/{{$form->id}}/faculties/{{$facultyId}}/pdf" class="btn btn-danger btn-lg">
+                PDF
+            </a>
         </div>
     </div>
 @endsection
