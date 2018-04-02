@@ -162,7 +162,7 @@
                                     'Home Economics',
                                     'Information and Communication Technology',
                                     'Science, Technology, Engineering and Math',
-                                    'Humanities and Social Studies',
+                                    'General Academic',
                                 ];
                             @endphp
                             <select name="strands" class="form-control" id="strands">
@@ -181,6 +181,7 @@
                                     'Bachelor of Science in Computer Engineering',
                                     'Bachelor of Science in Hospitality Management',
                                     'Bachelor of Science in Tourism Management',
+                                    'Bachelor of Science in Computer Engineering',
                                 ];
                             @endphp
 

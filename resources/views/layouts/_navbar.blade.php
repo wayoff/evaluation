@@ -23,7 +23,8 @@
                 </div>
                 <div class="col-md-9" style="margin-top:20px;">
                     <h3>AMA Computer College</h3>
-                    <h4>Online Faculty Evaluation</h4>
+                    <h4>Mandaluyong Campus</h4>
+                    {{-- <h4>Online Faculty Evaluation</h4> --}}
                 </div>
             </div>
         </div>

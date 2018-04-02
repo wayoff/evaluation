@@ -39,7 +39,7 @@
     @yield('scripts')
     <script>
       document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
+        // e.preventDefault();
       });
 
       $('form').on('submit', function() {

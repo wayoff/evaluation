@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
 use Excel;
 use App\User;
 
@@ -65,13 +66,11 @@ class UsersController extends Controller
     }
 
     public function import(Request $request)
-    {
-        Excel::load($request->file('list'), function($reader) {
-            $users = [];
+    {   $users = [];
 
+        Excel::load($request->file('list'), function($reader) use($users) {
             // Getting all results
             $results = $reader->get();
-
             foreach($results as $result) {
                 $user = [
                     'username' => $result->student_number,
@@ -112,9 +111,39 @@ class UsersController extends Controller
                 $users[] = $user;
             }
 
-            dd($users);
+            $users = collect($users);
+            
+            $usernames = $users->pluck('username')->all();
+
+            $exists = $this->users->whereIn('username', $usernames)->get();
+
+            if (!$exists->isEmpty()) {
+
+               return Alert::error('username\'s already exists:' . $exists->implode('username', ','));
+                // return redirect('/users');
+            }
+
+            foreach($users as $user) {
+                $userModel = $this->users->create([
+                    'username' => strval($user['username']),
+                    'password' =>  $user['password'],
+                    'user_type' =>  $user['user_type'],
+                    'first_name' =>  $user['first_name'],
+                    'last_name' =>  $user['last_name'],
+                    'middle_name' =>  $user['middle_name'],
+                    'department' => null,
+                ]);
+
+                $userModel->student()->create($user['student']);
+                $userModel->student->professors()->sync($user['faculties']);
+            }
+
+            Alert::success('Success on importing students');
 
         });
+
+        return redirect('/users');
+
     }
 
     /**

@@ -1,3 +1,3 @@
 <div class="footer">
-  Copyright AMA Computer College Mandaluyong Campus
+  AALJ FES @ AMACCMandCampus
 </div>
