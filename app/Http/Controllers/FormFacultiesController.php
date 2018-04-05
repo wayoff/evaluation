@@ -63,6 +63,7 @@ class FormFacultiesController extends Controller
     {
 
         $form = $this->forms->findOrFail($id);
+        $user = User::find($facultyId);
 
         $evaluation = $form->evaluations()->where('user_id', $facultyId)->with('answers.studentAnswers.question', 'answers.studentAnswers.category')->first();
 
@@ -74,9 +75,9 @@ class FormFacultiesController extends Controller
             $studentAnswers = $studentAnswers->merge($answer->studentAnswers);
         }
         
-        $pdf = PDF::loadView('pdf.forms-faculties', compact('evaluation', 'form', 'studentAnswers'));
+        $pdf = PDF::loadView('pdf.forms-faculties', compact('evaluation', 'form', 'studentAnswers', 'user', 'answers'));
 
-        return $pdf->download('faculty-'.$facultyId.'.pdf');
+        return $pdf->stream();
 
         // return view('pdf.forms-faculties', compact('evaluation', 'form', 'studentAnswers'));
     }

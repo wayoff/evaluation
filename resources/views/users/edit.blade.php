@@ -128,7 +128,10 @@
                         <label class="col-md-4 control-label">Department</label>
 
                         <div class="col-md-6">
-                            <input type="" class="form-control" name="department" value="{{$user->department}}">
+                            <select name="department" class="form-control">
+                                <option value="College" {{$user->department == 'College' ? 'selected' : '' }}>College</option>
+                                <option value="SHS" {{$user->department == 'SHS' ? 'selected' : '' }}>SHS</option>
+                            </select>
                         </div>
                     </div>
                 @endif
@@ -162,6 +165,7 @@
                                     'Home Economics',
                                     'Information and Communication Technology',
                                     'Science, Technology, Engineering and Math',
+                                    'Humanities and Social Science',
                                     'General Academic',
                                 ];
                             @endphp
@@ -198,12 +202,15 @@
 
                     <div class="form-group student_info">
                         <label for="student_professor" class="col-md-4 control-label"> Student Professor</label>
-
                         <div class="col-md-8 col-md-offset-4">
                             @foreach($faculties as $faculty)
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="{{ $faculty->id }}" checked="checked" name="professor_id[]">
+                                        <input type="checkbox"
+                                            value="{{ $faculty->id }}"
+                                            name="professor_id[]"
+                                            {{ !empty($user->student->professors()->where('id', $faculty->id)->first()) ? 'checked' : '' }}
+                                        >
                                         (ID: {{ $faculty->id }}) Name: {{ $faculty->name }}
                                     </label>
                                 </div>

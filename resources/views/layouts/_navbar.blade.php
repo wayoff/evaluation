@@ -57,6 +57,12 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                @if(auth()->user()->isStudent())
+                                    <a href="/auth/change-password">
+                                        Change Password
+                                    </a>
+                                @endif
+
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

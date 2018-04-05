@@ -25,6 +25,8 @@ Route::get('/', function () {
 
 });
 
+Route::get('/auth/change-password', 'UsersController@changePassword');
+Route::post('/auth/change-password', 'UsersController@updatePassword');
 Auth::routes();
 Route::get('/answers/{answer_id}/student', 'AnswerController@show');
 Route::get('/answers/{evaluation_id}', 'AnswerController@create');

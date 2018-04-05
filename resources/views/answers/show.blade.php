@@ -24,6 +24,10 @@
                     <td> Professor id </td>
                     <td> {{ $answer->evaluation->user->id }} </td>
                 </tr>
+                <tr>
+                    <td>Created at</td>
+                    <td>{{ $answer->created_at }}</td>
+                </tr>
             </table>
         </div>
     </div>
@@ -90,7 +94,41 @@
                     @endforeach 
                 </tbody>
             </table>
-            {{-- pie graph --}}
+
+            <table class="table table-striped">
+                @foreach($answer->studentAnswers->groupBy('category_id') as $group)
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Always</th>
+                            <th>Often</th>
+                            <th>Sometimes</th>
+                            <th>Seldom</th>
+                            <th>Never</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{$group[0]['category']['title']}} </td>
+                            <td class="text-center">
+                                {{ number_format($group->where('value', 'Always')->count() / $group->count() * 100, 2) }} %
+                            </td>
+                            <td class="text-center">
+                                {{ number_format($group->where('value', 'Often')->count() / $group->count() * 100, 2) }} %
+                            </td>
+                            <td class="text-center">
+                                {{ number_format($group->where('value', 'Sometimes')->count() / $group->count() * 100, 2) }} %
+                            </td>
+                            <td class="text-center">
+                                {{ number_format($group->where('value', 'Seldom')->count() / $group->count() * 100, 2) }} %
+                            </td>
+                            <td class="text-center">
+                                {{ number_format($group->where('value', 'Never')->count() / $group->count() * 100, 2) }} %
+                            </td>
+                        </tr>
+                    </tbody>
+                @endforeach
+            </table>
         </div>
     </div>
 @endsection

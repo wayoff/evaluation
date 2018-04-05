@@ -39,6 +39,7 @@
                         <th>EVALUATION</th>
                         <th>STUDENT NAME</th>
                         <th>PROFESSOR</th>
+                        <th>CREATED AT</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -49,6 +50,7 @@
                             <td>{{ $answer->evaluation->form->title }}</td>
                             <td>{{ $answer->user->name }}</td>
                             <td>{{ $answer->evaluation->user->name }}</td>
+                            <td>{{ $answer->created_at }}</td>
                             <td>
                                 <a href="/answers/{{ $answer->id }}/student" class="btn btn-info btn-xs" title="See answers">
                                     <span class="glyphicon glyphicon-eye-open"></span>

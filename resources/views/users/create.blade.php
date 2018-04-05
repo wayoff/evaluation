@@ -124,7 +124,10 @@
                     <label class="col-md-4 control-label">Department</label>
 
                     <div class="col-md-6">
-                        <input type="" class="form-control" name="department">
+                        <select name="department" class="form-control">
+                            <option value="College">College</option>
+                            <option value="SHS">SHS</option>
+                        </select>
                     </div>
                 </div>
 
@@ -155,6 +158,7 @@
                                     'Home Economics',
                                     'Information and Communication Technology',
                                     'Science, Technology, Engineering and Math',
+                                    'Humanities and Social Science',
                                     'General Academic',
                                 ];
                             @endphp

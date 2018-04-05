@@ -5,34 +5,29 @@
   <title>Faculty</title>
 </head>
 <body>
-  <table class="table table-striped table-bordered">
-      <thead>
-          <tr>
-              <th>Answer</th>
-              <th>Count</th>
-          </tr>
-      </thead>
-      <tbody>
-      @php 
-          $labels = [];
-          $counts = [];
-      @endphp
-          @foreach($studentAnswers->groupBy('value') as $key => $group)
-              @php 
-                  $labels[] = $key;
-                  $counts[] = $group->count();
-              @endphp
-              <tr>
-                  <td>{{ $key }}</td>
-                  <td>{{ $group->count() }}</td>
-              </tr>
-          @endforeach 
-      </tbody>
+  <div style="text-align: center;">
+    <img src="img/ama.png">
+    <h2 style="padding-top:0px; margin-top:0px;padding-bottom: 0px;margin-bottom: 0px;">AMA Computer College</h2>
+    <h3 style="padding-top:0px; margin-top:0px;">Mandaluyong Campus</h3>
+  </div>
+
+  <table width="100%" style="margin-top:20px;">
+    <tr>
+      <td> Faculty ID </td>
+      <td style="font-weight: bold"> {{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }} </td>
+      <td> Faculty Name </td>
+      <td style="font-weight: bold"> {{ $user->name }} </td>
+    </tr>
+    <tr>
+      <td> Faculty Department </td>
+      <td style="font-weight: bold"> {{ $user->department }} </td>
+    </tr>
   </table>
-  <table class="table table-striped table-bordered">
+
+  <table width="100%" style="margin-top:20px;border: 1px solid black;padding:5px;">
       <thead>
           <tr>
-              <th>Question</th>
+              <th>Questions</th>
               <th>Always</th>
               <th>Often</th>
               <th>Sometimes</th>
@@ -63,7 +58,8 @@
           @endforeach
       </tbody>
   </table>
-  <table class="table table-striped">
+
+  <table width="100%" style="margin-top:5px ;border: 1px solid black;padding:5px;">
       @foreach($studentAnswers->groupBy('category_id') as $group)
           <thead>
               <tr>
@@ -96,6 +92,23 @@
               </tr>
           </tbody>
       @endforeach
+  </table>
+
+  <table width="100%" style="margin-top:20px;">
+    <thead>
+      <tr>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($answers as $answer)
+        @if(!empty($answer->comment))
+          <tr>
+            <td> {{ $answer->comment }} </td>
+          </tr>
+        @endif
+      @endforeach
+    </tbody>
   </table>
 </body>
 </html>

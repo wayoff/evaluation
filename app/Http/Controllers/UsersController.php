@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Alert;
 use Excel;
+use Hash;
+use Auth;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -74,7 +76,7 @@ class UsersController extends Controller
             foreach($results as $result) {
                 $user = [
                     'username' => $result->student_number,
-                    'password' => bcrypt($result->last_name . '321'),
+                    'password' => bcrypt($result->password),
                     'user_type' => 3,
                     'first_name' => $result->first_name,
                     'last_name' => $result->last_name,
@@ -92,21 +94,34 @@ class UsersController extends Controller
                 $faculties = [
                     'teacher_1',
                     'teacher_2',
-                    'teacher_3'
+                    'teacher_3',
+                    'teacher_4',
+                    'teacher_5',
+                    'teacher_6',
+                    'teacher_7',
+                    'teacher_8',
+                    'teacher_9',
+                    'teacher_10',
                 ];
 
-                foreach ($faculties as $faculty) {
+                foreach($faculties as $faculty) {
                     if (!empty($result[$faculty])) {
-                        $last_name = explode(', ', $result[$faculty])[0];
-                        $first_name = explode(', ', $result[$faculty])[1];
-
-                        $facultyModel = $this->users->where('last_name', $last_name)->where('first_name', $first_name)->first();
-
-                        if (!empty($facultyModel)) {
-                            $user['faculties'][] = $facultyModel->id;
-                        }
+                        $user['faculties'][] = $result[$faculty];
                     }
                 }
+
+                // foreach ($faculties as $faculty) {
+                //     if (!empty($result[$faculty])) {
+                //         $last_name = explode(', ', $result[$faculty])[0];
+                //         $first_name = explode(', ', $result[$faculty])[1];
+
+                //         $facultyModel = $this->users->where('last_name', $last_name)->where('first_name', $first_name)->first();
+
+                //         if (!empty($facultyModel)) {
+                //             $user['faculties'][] = $facultyModel->id;
+                //         }
+                //     }
+                // }
 
                 $users[] = $user;
             }
@@ -220,5 +235,37 @@ class UsersController extends Controller
         $user->delete();
         
         return redirect('users');
+    }
+
+    public function changePassword(Request $request)
+    {
+        return view('users.change-password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+        }
+ 
+        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+            //Current password and new password are same
+            return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+        }
+ 
+        $validatedData = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+ 
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'));
+        $user->save();
+
+        Alert::success('Password changed successfully !');
+ 
+        return redirect()->back();
     }
 }
