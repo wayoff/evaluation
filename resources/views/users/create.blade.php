@@ -176,7 +176,7 @@
                                     'Bachelor of Science in Computer Engineering',
                                     'Bachelor of Science in Hospitality Management',
                                     'Bachelor of Science in Tourism Management',
-                                    'Bachelor of Science in Computer Engineering',
+                                    'Bachelor of Science in Computer Science',
                                 ];
                             @endphp
 
