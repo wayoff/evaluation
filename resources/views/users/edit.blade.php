@@ -3,7 +3,6 @@
 @section('content')
     <div class="panel panel-primary">
         <div class="panel-heading">Update</div>
-
         <div class="panel-body">
             <form class="form-horizontal" method="POST" action="{{ route('users.update', $user->id) }}">
                 {{ csrf_field() }}

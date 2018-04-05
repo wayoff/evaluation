@@ -7,6 +7,7 @@ use Excel;
 use Hash;
 use Auth;
 use App\User;
+use App\Student;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserUpdateRequest;
@@ -110,19 +111,6 @@ class UsersController extends Controller
                     }
                 }
 
-                // foreach ($faculties as $faculty) {
-                //     if (!empty($result[$faculty])) {
-                //         $last_name = explode(', ', $result[$faculty])[0];
-                //         $first_name = explode(', ', $result[$faculty])[1];
-
-                //         $facultyModel = $this->users->where('last_name', $last_name)->where('first_name', $first_name)->first();
-
-                //         if (!empty($facultyModel)) {
-                //             $user['faculties'][] = $facultyModel->id;
-                //         }
-                //     }
-                // }
-
                 $users[] = $user;
             }
 
@@ -149,8 +137,40 @@ class UsersController extends Controller
                     'department' => null,
                 ]);
 
-                $userModel->student()->create($user['student']);
-                $userModel->student->professors()->sync($user['faculties']);
+                // $student = Student::create([
+                //     'user_id' => $userModel->id,
+                //     // 'student_no' => $user['student']['student_no'],
+                //     // 'academic_attended' => $user['student']['academic_attended'],
+                //     // 'yr_level' => $user['student']['yr_level'],
+                //     // 'strands' => $user['student']['strands'],
+                //     // 'course' => $user['student']['course'],
+                //     'student_no' => 'putangina',
+                //     'academic_attended' => 'putangina',
+                //     'yr_level' => 'putangina',
+                //     'strands' => 'putangina',
+                //     'course' => 'putangina',
+                // ]);
+
+                $student = new Student();
+                $student->user_id = $userModel->id;
+                $student->student_no = $user['student']['student_no'];
+                $student->academic_attended = 'putangina';
+                $student->yr_level = 'putangina';
+                $student->strands = 'putangina';
+                $student->course = 'putangina';
+                $student->save();
+
+                $student->professors()->sync($user['faculties']);
+
+                $this->updateStudent([
+                    'student_no' => $user['student']['student_no'],
+                    'academic_attended' => $user['student']['academic_attended'],
+                    'yr_level' => $user['student']['yr_level'],
+                    'strands' => $user['student']['strands'],
+                    'course' => $user['student']['course'],
+                    'professor_id' => $user['faculties']
+                ], $userModel);
+
             }
 
             Alert::success('Success on importing students');
@@ -209,17 +229,21 @@ class UsersController extends Controller
         ]);
 
         if($user->isStudent()) {
-            $user->student()->update([
-                'student_no' => $request->input('student_no'),
-                'academic_attended' => $request->input('academic_attended'),
-                'yr_level'=> $request->input('yr_level'),
-                'strands'=> $request->input('strands'),
-                'course'=> $request->input('course'),
-            ]);
-            $user->student->professors()->sync($request->input('professor_id'));
+            $this->updateStudent($request->all(), $user);
         }
 
         return redirect('users');
+    }
+
+    private function updateStudent($data, $user) {
+        $user->student()->update([
+            'student_no' => $data['student_no'],
+            'academic_attended' => $data['academic_attended'],
+            'yr_level'=> $data['yr_level'],
+            'strands'=> !empty($data['strands']) ? $data['strands'] : '',
+            'course'=> !empty($data['course']) ? $data['course'] : '',
+        ]);
+        $user->student->professors()->sync($data['professor_id']);
     }
 
     /**
