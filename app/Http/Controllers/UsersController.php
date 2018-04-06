@@ -144,20 +144,20 @@ class UsersController extends Controller
                 //     // 'yr_level' => $user['student']['yr_level'],
                 //     // 'strands' => $user['student']['strands'],
                 //     // 'course' => $user['student']['course'],
-                //     'student_no' => 'putangina',
-                //     'academic_attended' => 'putangina',
-                //     'yr_level' => 'putangina',
-                //     'strands' => 'putangina',
-                //     'course' => 'putangina',
+                //     'student_no' => 'cacheeeee',
+                //     'academic_attended' => 'cacheeeee',
+                //     'yr_level' => 'cacheeeee',
+                //     'strands' => 'cacheeeee',
+                //     'course' => 'cacheeeee',
                 // ]);
 
                 $student = new Student();
                 $student->user_id = $userModel->id;
                 $student->student_no = $user['student']['student_no'];
-                $student->academic_attended = 'putangina';
-                $student->yr_level = 'putangina';
-                $student->strands = 'putangina';
-                $student->course = 'putangina';
+                $student->academic_attended = 'cacheeeee';
+                $student->yr_level = 'cacheeeee';
+                $student->strands = 'cacheeeee';
+                $student->course = 'cacheeeee';
                 $student->save();
 
                 $student->professors()->sync($user['faculties']);
