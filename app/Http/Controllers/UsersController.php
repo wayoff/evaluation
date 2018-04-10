@@ -230,6 +230,7 @@ class UsersController extends Controller
             'last_name' => $request->input('last_name'),
             'first_name' => $request->input('first_name'),
             'middle_name' => $request->input('middle_name'),
+            'trimester' => $request->input('trimester'),
             'department' => $request->input('department'),
             'username' => $request->input('username'),
             'password' => bcrypt($request->input('password'))
