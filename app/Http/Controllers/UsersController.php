@@ -8,6 +8,8 @@ use Hash;
 use Auth;
 use App\User;
 use App\Student;
+use App\Evaluation;
+use App\Answer;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserUpdateRequest;
@@ -33,9 +35,12 @@ class UsersController extends Controller
 
         if ($request->input('q')) {
             $users = $users
-                        ->where('name', 'like', '%' . $q . '%')
+                        ->where('last_name', 'like', '%' . $q . '%')
+                        ->orWhere('first_name', 'like', '%' . $q . '%')
+                        ->orWhere('middle_name', 'like', '%' . $q . '%')
                         ->orWhere('id', 'like', '%' . $q . '%')
-                        ->orWhere('username', 'like', '%' . $q . '%');
+                        ->orWhere('username', 'like', '%' . $q . '%')
+                        ->orWhere('trimester', 'like', '%' . $q . '%');
         }
 
         $users = $users->orderBy('id', 'desc')->paginate(20);
@@ -82,6 +87,7 @@ class UsersController extends Controller
                     'first_name' => $result->first_name,
                     'last_name' => $result->last_name,
                     'middle_name' => $result->middle_name,
+                    'trimester' => $result->trimester,
                     'student' => [
                         'student_no' => $result->student_number,
                         'academic_attended' => $result->division,
@@ -134,6 +140,7 @@ class UsersController extends Controller
                     'first_name' =>  $user['first_name'],
                     'last_name' =>  $user['last_name'],
                     'middle_name' =>  $user['middle_name'],
+                    'trimester' => $user['trimester'],
                     'department' => null,
                 ]);
 
@@ -290,6 +297,21 @@ class UsersController extends Controller
 
         Alert::success('Password changed successfully !');
  
+        return redirect()->back();
+    }
+
+    public function deleteStudents()
+    {
+        $users = $this->users->where('user_type', 3)->get();
+
+        $usersId = $users->pluck('id');
+
+        Student::truncate();
+        Evaluation::whereIn('user_id', $usersId)->delete();
+        Answer::whereIn('user_id', $usersId)->delete();
+        $this->users->where('user_type', 3)->delete();
+        Alert::success('Deleted all students!');
+
         return redirect()->back();
     }
 }

@@ -19,6 +19,7 @@ class CreateAnswersTable extends Migration
             $table->integer('evaluation_id');
             $table->text('comment')->nullable();
             $table->timestamps();
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

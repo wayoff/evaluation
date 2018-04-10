@@ -8,6 +8,8 @@ use App\Category;
 use App\Form;
 use App\Question;
 use App\Evaluation;
+use App\Answer;
+
 use App\Http\Requests\FormUpdateRequest;
 use Illuminate\Http\Request;
 
@@ -151,6 +153,11 @@ class FormsController extends Controller
      */
     public function destroy($id)
     {
+        $evaluations = Evaluation::where('form_id', $id)->get();
+        $evaluationIds = $evaluations->pluck('id'); 
+
+        Answer::whereIn('evaluation_id', $evaluationIds)->delete();
+        Evaluation::where('form_id', $id)->delete();
         $this->forms->findOrFail($id)->delete();
 
         Alert::success('Success on removing form');

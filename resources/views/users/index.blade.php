@@ -7,7 +7,7 @@
         </div>
 
         <div class="panel-body">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <form action="/users/import" method="POST" class="form-inline" role="form" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -29,9 +29,12 @@
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
-            <div class="col-md-2 text-right">
+            <div class="col-md-3 text-right">
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
                     Create
+                </a>
+                <a href="/users/students/delete" class="btn btn-danger btn-del-students">
+                    Delete All Students
                 </a>
             </div>
             <table class="table-striped table table-bordered">
@@ -41,6 +44,7 @@
                         <th>Name</th>
                         <th>Username</th>
                         <th>Type</th>
+                        <th>Trimester</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -58,6 +62,7 @@
                             <td> {{ $user->name }} </td>
                             <td> {{ $user->username }} </td>
                             <td> {{ $user->user_type }} </td>
+                            <td> {{ $user->trimester }} </td>
                             <td>
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="form-inline form-delete" role="form">
                                     {!! csrf_field() !!}
@@ -85,3 +90,17 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script>
+        $( function() {
+            $('.btn-del-students').on('click', function(e) {
+                if (confirm('Are you sure to delete all students? ')) {
+                    return true;
+                }
+
+                e.preventDefault()
+            })
+        });
+    </script>
+@stop

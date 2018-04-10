@@ -1,7 +1,23 @@
+@php
+
+  function addOrdinalNumberSuffix($num) {
+    if (!in_array(($num % 100),array(11,12,13))){
+      switch ($num % 10) {
+        // Handle 1st, 2nd, 3rd
+        case 1:  return $num.'st';
+        case 2:  return $num.'nd';
+        case 3:  return $num.'rd';
+      }
+    }
+    return $num.'th';
+  }
+
+@endphp
+
 @extends('layouts.app-sidemenu')
 
 @section('content')
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">Questions</div>
 
         <div class="panel-body">
@@ -39,27 +55,34 @@
 
                 @php
                     $choices = collect([
-                        [
-                            'label' => '1st Choice',
-                            'value' => 'Always'
-                        ],
-                        [
-                            'label' => '2nd Choice',
-                            'value' => 'Often'
-                        ],
-                        [
-                            'label' => '3rd Choice',
-                            'value' => 'Sometimes'
-                        ],
-                        [
-                            'label' => '4th Choice',
-                            'value' => 'Seldom'
-                        ],
-                        [
-                            'label' => '5th Choice',
-                            'value' => 'Never'
-                        ]
+                        // [
+                        //     'label' => '1st Choice',
+                        //     'value' => 'Always'
+                        // ],
+                        // [
+                        //     'label' => '2nd Choice',
+                        //     'value' => 'Often'
+                        // ],
+                        // [
+                        //     'label' => '3rd Choice',
+                        //     'value' => 'Sometimes'
+                        // ],
+                        // [
+                        //     'label' => '4th Choice',
+                        //     'value' => 'Seldom'
+                        // ],
+                        // [
+                        //     'label' => '5th Choice',
+                        //     'value' => 'Never'
+                        // ]
                     ]);
+
+                    foreach($question->choices as $choice) {
+                        $choices->push([
+                            'label' => addOrdinalNumberSuffix($choice->order) . ' Choice',
+                            'value' => $choice->decription
+                        ]);
+                    }
                 @endphp
 
                 @foreach($choices->chunk(2) as $chunk)

@@ -85,6 +85,14 @@
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="trimester" class="col-md-4 control-label">Trimester</label>
+
+                    <div class="col-md-6">
+                        <input id="trimester" type="text" class="form-control" name="trimester">
+                    </div>
+                </div>
                 
                 <div class="form-group{{ $errors->has('user_type') ? ' has-error' : '' }}">
                     {{-- <label for="user_type" class="col-md-4 control-label"></label> --}}

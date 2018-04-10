@@ -35,6 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'admin'], function() {
 	Route::post('/users/import', 'UsersController@import');
+	Route::get('/users/students/delete', 'UsersController@deleteStudents');
 	Route::resource('users', 'UsersController');
 	Route::resource('questions', 'QuestionsController');
 	Route::resource('categories', 'CategoriesController');

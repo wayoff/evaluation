@@ -16,6 +16,7 @@ class CreateStudentUser extends Migration
         Schema::create('student_user', function (Blueprint $table) {
             $table->integer('student_id');
             $table->integer('user_id');
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
