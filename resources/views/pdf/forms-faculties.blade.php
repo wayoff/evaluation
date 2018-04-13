@@ -21,6 +21,8 @@
     <tr>
       <td> Faculty Department </td>
       <td style="font-weight: bold"> {{ $user->department }} </td>
+      <td> Trimester </td>
+      <td style="font-weight: bold"> {{ $user->trimester }} </td>
     </tr>
   </table>
 
